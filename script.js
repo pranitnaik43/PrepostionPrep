@@ -2,6 +2,7 @@
 // cannot access the API directly using front-end JS
 // therefore using cookies
 
+var myHeaders = new Headers();
 fetch("sensitiveData.json")
   .then(response => { 
     return response.json();
@@ -9,21 +10,11 @@ fetch("sensitiveData.json")
   .then(result => {
     sessionStorage.setItem("Authorization", result["Authorization"]);
     sessionStorage.setItem("Cookie", result["Cookie"]);
+    myHeaders.append("Authorization", sessionStorage.getItem("Authorization"));
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Cookie", sessionStorage.getItem("Cookie"));
   })
   .catch(err => { console.log(err); })
-
-var myHeaders = new Headers();
-myHeaders.append("Authorization", sessionStorage.getItem("Authorization"));
-myHeaders.append("Content-Type", "application/json");
-myHeaders.append("Cookie", sessionStorage.getItem("Cookie"));
-
-// var raw = JSON.stringify({"text":"With great power comes great responsibility","features":{"syntax":{"tokens":{"part_of_speech":true}}}});
-// var requestOptions = {
-//   method: 'POST',
-//   headers: myHeaders,
-//   body: raw,
-//   redirect: 'follow'
-// };
 
 var endingPoint = " ##--## ";
 var answers = [];
@@ -131,7 +122,7 @@ var page = randomNum() % maxPages;
 fetch(quotesURL+page)
   .then(response => { return response.json(); })
   .then(result => { 
-    console.log(result); 
+    // console.log(result); 
     if(result && result.results){
       createQuestions(result.results);
     }
@@ -140,7 +131,7 @@ fetch(quotesURL+page)
 
 function submit() {
   var score = 0;
-  console.log(answers);
+  // console.log(answers);
   for(var quesNum=1; quesNum<=totalQuestions; quesNum++) {
     var ansPoints = 0;
     answers[quesNum-1].forEach((answer, index) => {
