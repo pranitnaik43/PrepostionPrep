@@ -1,0 +1,18 @@
+.question {
+  margin: 20px 30px 20px 30px;
+}
+.myInput {
+  display: inline;
+  border: none;
+  border-bottom: 1px solid #000000;
+  text-align: center;
+}
+.myInput:focus {
+  outline-width: 0px;
+}
+.myLabel {
+  display: inline;
+}
+.score {
+  color: green;
+}
